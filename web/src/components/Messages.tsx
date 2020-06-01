@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import queryString from "query-string"
 import io from "socket.io-client"
 import { Game } from "./Game";
-const ENDPOINT = "http://localhost:8080/"
+const ENDPOINT = "https://calm-peak-18206.herokuapp.com/"
 let socket:any;
 
 export const Messages = () => {

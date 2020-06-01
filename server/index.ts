@@ -3,6 +3,7 @@ import express from "express"
 import router from "./router"
 import socketio from "socket.io"
 import { setState, addUser, removeRoom, isGameOver } from "./game"
+import cors from "cors"
 
 interface Hash {
   [details: string] : string;
@@ -55,5 +56,6 @@ io.on('connect', async (socket) => {
 })
 // app.use(cors)
 app.use(router)
+app.use(cors)
 
-server.listen(PORT, () => console.log(`Server has started on ${PORT}`));
+server.listen(process.env.PORT || PORT, () => console.log(`Server has started on ${PORT}`));
