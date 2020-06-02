@@ -6,19 +6,20 @@ let room:{
     turn:number
 }[] = []
 
-export const addUser = (user:string, name:string ) => {
+export const addUser = (user:string, name:string, pturn:number ) => {
     tmp = room.findIndex((item) => {return item.name === name})
     if(tmp === -1) { 
         room.push({
             name,
             users:[user],
             board: [-1,-1,-1,-1,-1,-1,-1,-1,-1],
-            turn:0
+            turn:pturn
         })
         return 1;
     }
     if(room[tmp].users.length === 2) return 0;
     room[tmp].users.push(user);
+    room[tmp].turn = pturn
     return 2;
     
 }
@@ -48,4 +49,9 @@ export const isGameOver = (board:number[]) => {
     if((board[0] !== -1) && (board[0] === board[4]) && (board[4] === board[8])) return board[0]
     for(let i=0; i<9; ++i) if(board[i] === -1) return -1;
     return 2;
+}
+
+export const getUsers = (name:string) => {
+    tmp = room.findIndex((item) => {return item.name === name})
+    return room[tmp].users
 }

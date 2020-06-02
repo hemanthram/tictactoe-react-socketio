@@ -2,7 +2,7 @@ import { createServer } from "http"
 import express from "express"
 import router from "./router"
 import socketio from "socket.io"
-import { setState, addUser, removeRoom, isGameOver } from "./game"
+import { setState, addUser, removeRoom, isGameOver, getUsers } from "./game"
 import cors from "cors"
 
 interface Hash {
@@ -22,16 +22,17 @@ io.on('connect', async (socket) => {
   socket.on('join', (user, room, callback) => {
     acusers += 1;
     console.log(`${acusers} users active`)
-
-    let f = addUser(user, room)
+    tmp = Math.round(Math.random())
+    let f = addUser(user, room, tmp)
     if(f === 0) { return callback('Room not available, try different name please') }
     socket.join(room) 
     socketroom[socket.id] = room
     if(f === 1) { socket.emit('assignPlayer', {assign:1}) }
     if(f === 2) {
       socket.emit('assignPlayer', {assign:2})
-      io.to(room).emit('game')
-      io.to(room).emit('turnChange', {turn:0})
+      const usersinroom = getUsers(room)
+      io.to(room).emit('game', usersinroom)
+      io.to(room).emit('turnChange', {turn:tmp})
     }    
   })
 
@@ -42,7 +43,10 @@ io.on('connect', async (socket) => {
         io.to(room).emit('stateChange', tmp.board)
         io.to(room).emit('turnChange', {turn:tmp.turn})
       }
-      else io.to(room).emit('gameOver', winner)
+      else {
+        io.to(room).emit('stateChange', tmp.board)
+        io.to(room).emit('gameOver', winner)
+      }
   })
 
   socket.on('disconnect', () => {

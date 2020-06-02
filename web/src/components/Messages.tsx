@@ -11,9 +11,10 @@ export const Messages = () => {
     const [id, setId] = useState(0)
     const [game, setGame] = useState(false)
     const [play, setPlay] = useState(false)
-    const [state, setState] = useState(['n','n','n','n','n','n','n','n','n'])
+    const [state, setState] = useState(['_','_','_','_','_','_','_','_','_'])
     const [gameOver, setgameOver] = useState(false)
     const [winner, setWinner] = useState(0)
+    const [users, setUsers] = useState([''])
 
     useEffect(() => {
         socket = io(ENDPOINT)
@@ -24,18 +25,21 @@ export const Messages = () => {
             alert(error)
             window.location.pathname = '/'
         })
-    },[ENDPOINT])
+    },[ENDPOINT,window.location.search])
 
     useEffect(() => {
         socket.on('assignPlayer', ( {assign}:any) => { setId(assign) })
-        socket.on('game', () => setGame(true))
+        socket.on('game', (usersinroom:string[]) => {
+            setGame(true)
+            setUsers(usersinroom)
+        })
         socket.on('turnChange', ( {turn}:any ) => {
             if((turn+1) === id) setPlay(true)
             else setPlay(false)
         })
         socket.on('stateChange', ( tmp:number[] ) => {
             setState(tmp.map((item) => {
-                if(item === -1) return 'n'
+                if(item === -1) return '_'
                 else if(item === 0 ) return 'x'
                 else return 'o'
             }))
@@ -62,13 +66,22 @@ export const Messages = () => {
     return(
         <div>
             <h1>Hi {name}</h1>
-            <h4>Room : {room}</h4>
-            <p>Your ID : {id}</p>
-            {game && <Game play={play} state={state} buttonPress ={buttonPress}/>}
+            <h2>Room : {room}</h2>
+            <p>Your are player : {id===1 ? "X" : "O"}</p>
+            {game && 
+                <div>
+                    <h3>Players in Room</h3>
+                    <p>You - {users[id-1]} - Player {id-1 ? 'O' : 'X'}</p>
+                    <p>Opponent - {users[(id-1)^1]} - Player {(id-1)^1 ? 'O' : 'X'} </p>
+                </div>}
+            {game ? <Game play={play} state={state} buttonPress ={buttonPress}/> : <p>Waiting for Opponent to Join</p>}
+            {(game && !gameOver) && (play ? <p>Your Turn</p> : <p>Opponent's turn</p>)}
             {gameOver &&
             (<div>
                 <p>Game Over</p>
-                <p>Winner is {winner}</p>
+                <div>{
+                    (winner===2)?<p>Game Draw</p> : (winner!==(id-1))? <p>You Lose</p> : <p>You Win</p>
+                }</div>
                 <button onClick={Login}>Login Again</button>
             </div>)}
         </div>
