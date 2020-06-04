@@ -3,8 +3,8 @@ import queryString from "query-string"
 import io from "socket.io-client"
 import { Game } from "./Game";
 import { Link } from "react-router-dom";
-// const ENDPOINT = "http://localhost:8080/"
-const ENDPOINT = "https://calm-peak-18206.herokuapp.com/"
+const ENDPOINT = "http://localhost:8080/"
+// const ENDPOINT = "https://calm-peak-18206.herokuapp.com/"
 
 let socket:any;
 
@@ -52,7 +52,7 @@ export const Messages = () => {
             socket.disconnect()
             setGame(false)
             setgameOver(false)
-            setUserLeft(true)   
+            setUserLeft(true)
         })
         socket.on('gameOver', (winner:number) => {
             setPlay(false)
@@ -60,7 +60,7 @@ export const Messages = () => {
             setWinner(winner)
         })
     })
-    
+
     const Login = () => {
         window.location.pathname = '/'
     }
@@ -75,7 +75,7 @@ export const Messages = () => {
             <h1>Hi {name}</h1>
             <h2>Room : {room}</h2>
             {(id === -1 && !userLeft) ? <p>Loading</p> : <p>Your are player : {id===1 ? "X" : "O"}</p>}
-            {game && 
+            {game &&
                 <div>
                     <h3>Players in Room</h3>
                     <p>You - {users[id-1]} - Player {id-1 ? 'O' : 'X'}</p>
@@ -91,7 +91,7 @@ export const Messages = () => {
                 }</div>
                 <button onClick={Login}>Login Again</button>
             </div>)}
-            {userLeft && 
+            {userLeft &&
             <div>
                 <p>Your Opponent Left</p>
                 <Link to='/'>Login Again</Link>
