@@ -69,6 +69,7 @@ export const Messages = () => {
 
     const buttonPress = (e:any,x:number) => {
         e.preventDefault();
+        setPlay(false)
         socket.emit('play', {room, id, pos:x})
     }
 
