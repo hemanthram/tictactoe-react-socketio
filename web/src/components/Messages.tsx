@@ -3,6 +3,8 @@ import queryString from "query-string"
 import io from "socket.io-client"
 import { Game } from "./Game";
 import { Link } from "react-router-dom";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const ENDPOINT = "http://localhost:8080/"
 // const ENDPOINT = "https://calm-peak-18206.herokuapp.com/"
 
@@ -72,30 +74,38 @@ export const Messages = () => {
 
     return(
         <div>
-            <h1>Hi {name}</h1>
-            <h2>Room : {room}</h2>
-            {(id === -1 && !userLeft) ? <p>Loading</p> : <p>Your are player : {id===1 ? "X" : "O"}</p>}
-            {game &&
+            <div className="container">
                 <div>
-                    <h3>Players in Room</h3>
-                    <p>You - {users[id-1]} - Player {id-1 ? 'O' : 'X'}</p>
-                    <p>Opponent - {users[(id-1)^1]} - Player {(id-1)^1 ? 'O' : 'X'} </p>
-                </div>}
-            {game  ? <Game play={play} state={state} buttonPress ={buttonPress}/> : !userLeft && <p>Waiting for Opponent to Join</p>}
-            {(game && !gameOver) && (play ? <p>Your Turn</p> : <p>Opponent's turn</p>)}
-            {gameOver &&
-            (<div>
-                <p>Game Over</p>
-                <div>{
-                    (winner===2)?<p>Game Draw</p> : (winner!==(id-1))? <p>You Lose</p> : <p>You Win</p>
-                }</div>
-                <button onClick={Login}>Login Again</button>
-            </div>)}
-            {userLeft &&
-            <div>
-                <p>Your Opponent Left</p>
-                <Link to='/'>Login Again</Link>
-            </div> }
+                    <h3>Hi {name}</h3>
+                    <h4>Room : {room}</h4>
+                    {(id === -1 && !userLeft) ? <p>Loading</p> : <p>Your are player : {id===1 ? "X" : "O"}</p>}
+                    {game &&
+                        <div>
+                            <h5>Players in Room</h5>
+                            <p>You - {users[id-1]} - Player {id-1 ? 'O' : 'X'}</p>
+                            <p>Opponent - {users[(id-1)^1]} - Player {(id-1)^1 ? 'O' : 'X'} </p>
+                        </div>}
+                </div>
+                <div className="game">
+                    {game  ? <Game play={play} state={state} buttonPress ={buttonPress} id={id}/> : !userLeft && <p>Waiting for Opponent to Join</p>}
+                    <div className="turn">
+                    {(game && !gameOver) && (play ? <p className="turn">Your Turn</p> : <p className="turn">Opponent's turn</p>)}
+                    </div>
+                    {gameOver &&
+                    (<div>
+                        <p>Game Over</p>
+                        <div>{
+                            (winner===2)?<p>Game Draw</p> : (winner!==(id-1))? <p>You Lose</p> : <p>You Win</p>
+                        }</div>
+                        <button onClick={Login}>Login Again</button>
+                    </div>)}
+                </div>
+                {userLeft &&
+                <div>
+                    <p>Your Opponent Left</p>
+                    <Link to='/'>Login Again</Link>
+                </div> }
+            </div>
         </div>
     )
 }
