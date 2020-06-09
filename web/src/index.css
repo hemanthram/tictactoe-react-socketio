@@ -35,13 +35,22 @@ h4{
 h5 {
     font-size: 1em;
 }
+h3 > span {
+    font-size: 0.5em;
+}
 p.turn {
     font-weight: bolder;
 }
 form{
     text-align: center;
     margin-top: -80px;
-    color: teal;
+    color: #17b06b;
+}
+form > p {
+    font-size: 1rem;
+}
+form > p >span {
+    font-size: 1.5rem;
 }
 input[type=text] {
     color: #17b06b;
@@ -97,6 +106,7 @@ button:hover{
     grid-gap: 1em;
 }
 .gamesub > div {
+    text-align: center;
     display: grid;
     grid-template-columns: repeat(3, 8.5em);
     grid-gap: 1em;
@@ -152,3 +162,11 @@ button.toe {
     box-shadow: 0px 0px 0 #43cb8e,0px 0px 0 #43cb8e,0px 0px 0 #43cb8e;
 }
 .toe .whenHover {display: none;}
+p {font-size: 1.5em;}
+p.waiting {
+    font-size: 2em;
+}
+.link {
+    color: #17b06b;
+    font-size: 2em;
+}

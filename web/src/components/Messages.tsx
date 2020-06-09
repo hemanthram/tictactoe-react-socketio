@@ -5,8 +5,8 @@ import { Game } from "./Game";
 import { Link } from "react-router-dom";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const ENDPOINT = "http://localhost:8080/"
-// const ENDPOINT = "https://calm-peak-18206.herokuapp.com/"
+// const ENDPOINT = "http://localhost:8080/"
+const ENDPOINT = "https://calm-peak-18206.herokuapp.com/"
 
 let socket:any;
 
@@ -76,8 +76,7 @@ export const Messages = () => {
         <div>
             <div className="container">
                 <div>
-                    <h3>Hi {name}</h3>
-                    <h4>Room : {room}</h4>
+                    <h3><span className="head1">Room</span><br/>{room}<br/><span className="head1">Player</span><br/>{name}</h3>
                     {(id === -1 && !userLeft) ? <p>Loading</p> : <p>Your are player : {id===1 ? "X" : "O"}</p>}
                     {game &&
                         <div>
@@ -85,15 +84,16 @@ export const Messages = () => {
                             <p>You - {users[id-1]} - Player {id-1 ? 'O' : 'X'}</p>
                             <p>Opponent - {users[(id-1)^1]} - Player {(id-1)^1 ? 'O' : 'X'} </p>
                         </div>}
+                    {!game && !userLeft && <p className="waiting">Waiting for Opponent to Join</p>}
                 </div>
                 <div className="game">
-                    {game  ? <Game play={play} state={state} buttonPress ={buttonPress} id={id}/> : !userLeft && <p>Waiting for Opponent to Join</p>}
+                    {game && <Game play={play} state={state} buttonPress ={buttonPress} id={id}/> }
                     <div className="turn">
                     {(game && !gameOver) && (play ? <p className="turn">Your Turn</p> : <p className="turn">Opponent's turn</p>)}
                     </div>
                     {gameOver &&
                     (<div>
-                        <p>Game Over</p>
+                        <h2>Game Over</h2>
                         <div>{
                             (winner===2)?<p>Game Draw</p> : (winner!==(id-1))? <p>You Lose</p> : <p>You Win</p>
                         }</div>
@@ -103,7 +103,7 @@ export const Messages = () => {
                 {userLeft &&
                 <div>
                     <p>Your Opponent Left</p>
-                    <Link to='/'>Login Again</Link>
+                    <Link to='/' className="link">Login Again</Link>
                 </div> }
             </div>
         </div>

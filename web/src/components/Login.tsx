@@ -20,14 +20,16 @@ export const Login = () => {
 
     return (
         <div>
-            <h1>#</h1>
+            <h1>#TicTacToe</h1>
             <form>
+              <p><span className="head1">Instructions</span><br/>Please provide your player name and the room name, and share the room name with your friend. <br/>Once they log in with the same room name, you can start playing !</p>
+              <br></br>
               <div className="row">
                 <div className="col 50">
                   <input type = 'text' placeholder = 'Name' value = {name} onChange = { ({target}) => setName(target.value) }  />
                 </div>
                 <div className="col 50">
-                  <input type = 'text' placeholder = "Room No." value = {room} onChange = { ({target}) => setRoom(target.value) } />
+                  <input type = 'text' placeholder = "Room Name" value = {room} onChange = { ({target}) => setRoom(target.value) } />
                 </div>
                 <div className="col 50">
                   <Link onClick={(e) => (!name || !room) ? e.preventDefault():null } to={`/game?name=${name}&room=${room}`}>
