@@ -102,26 +102,6 @@ button:hover{
     grid-gap: 1em;
     grid-auto-rows: 8.5em;
 }
-button.tic {
-    color: #11111d;
-    transition: all ease-in-out 0.2s;
-    cursor: pointer;
-    font-size: 7em;
-    font-weight: bolder;
-    box-shadow: 0px 0px 0 #43cb8e,0px 0px 0 #43cb8e,0px 0px 0 #43cb8e;
-}
-.tic:disabled{
-    color: #17b06b;
-}
-
-.tic:hover{
-    color: white;
-}
-.tic:disabled:hover{
-    background-color: #11111d;
-    cursor: default;
-    color: #17b06b;
-}
 .game {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -131,3 +111,44 @@ button.tic {
     grid-row: 2;
     grid-column: 2/3;
 }
+
+button.tic {
+    color: #11111d;
+    transition: all ease-in-out 0.2s;
+    cursor: pointer;
+    font-size: 7em;
+    font-weight: bolder;
+    box-shadow: 0px 0px 0 #43cb8e,0px 0px 0 #43cb8e,0px 0px 0 #43cb8e;
+}
+.tic:hover{
+    color: white;
+}
+.tic .whenHover {display: none;}
+.tic:hover .whenHover {display: inline;}
+.tic:hover .whenNotHover {display: none;}
+/* .tic:disabled:hover{
+    background-color: #11111d;
+    cursor: default;
+    color: #17b06b;
+} */
+button.tac {
+    background-color: #11111d;
+    cursor: default;
+    color: #17b06b;
+    transition: all ease-in-out 0.2s;
+    font-size: 7em;
+    font-weight: bolder;
+    box-shadow: 0px 0px 0 #43cb8e,0px 0px 0 #43cb8e,0px 0px 0 #43cb8e;
+}
+.tac .whenHover {display: none;}
+
+button.toe {
+    background-color: #11111d;
+    cursor: default;
+    color: #17b06b;
+    transition: all ease-in-out 0.2s;
+    font-size: 7em;
+    font-weight: bolder;
+    box-shadow: 0px 0px 0 #43cb8e,0px 0px 0 #43cb8e,0px 0px 0 #43cb8e;
+}
+.toe .whenHover {display: none;}
